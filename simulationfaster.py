@@ -19,7 +19,7 @@ stockfish = Stockfish(stockfish_path)
 
 
 
-#with open('37.txt', 'r') as file:
+#with open('RawDataTransfer.txt', 'r') as file:
     #gameResultsRawData = ast.literal_eval(file.read())
 
 gameResultsRawData = []
@@ -78,12 +78,6 @@ openings = [
     ["e2e4", "c7c6", "f1c4"] #Hillbilly Attack
 ]
 
-openings1 = []
-for n in range(25):
-    openings1.append(openings[n])
-openings2 = []
-for n in range(25):
-    openings2.append(openings[n+25])
 
 
 #Set up variables
@@ -182,28 +176,16 @@ def run_simulation_parallel(openings, depth):
 
 
 def save_results():
-    with open('47-50.txt', 'w') as file:
+    with open('RawDataTransfer.txt', 'w') as file:
         file.write(str(gameResultsRawData))
 
 
 if __name__ == '__main__':
     # Run simulations for depths 1 to 50
     
-    for depthPlay in range(4):
-        results1 = run_simulation_parallel(openings1, depthPlay+46)
-        with open('save.txt', 'w') as file:
-            file.write(str(results1))
-        results2 = run_simulation_parallel(openings2, depthPlay+46)
-        with open('save.txt', 'r') as file:
-            results1 = ast.literal_eval(file.read())
-        results = []
-        for n in range(len(results1)):
-            results.append(results1[n])
-        for i in range(len(results2)):
-            results.append(results2[i])
+    for depthPlay in range(50):
+        results = run_simulation_parallel(openings, depthPlay)
         gameResultsRawData.append(results)
-        with open('save.txt', 'w') as file:
-            file.write("Empty")
         save_results()
     # Save the results
     print("Done Simulating Games")
